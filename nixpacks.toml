@@ -1,4 +1,6 @@
 [build]
 language = "python"
-install_command = "pip install -r backend/requirements.txt && pip install gunicorn"
-start_command = "gunicorn backend.app:app --bind 0.0.0.0:$PORT --workers 1"
+includes = ["backend/"]  # Fuerza a Nixpacks a ignorar todo lo demás
+
+[build.context]
+include = ["backend/*"]  # ¡Nueva directiva clave!

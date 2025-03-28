@@ -1,0 +1,145 @@
+/* Estilos generales */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.table th {
+    font-weight: 600;
+    background-color: #f1f1f1;
+}
+
+/* Estilos para el formulario */
+.form-label.required:after {
+    content: " *";
+    color: #dc3545;
+}
+
+/* Estilos para la tabla de resultados */
+#resultsTable tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#resultsTable tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+#resultsTable tbody tr.table-primary {
+    background-color: rgba(13, 110, 253, 0.2);
+}
+
+/* Estilos para los badges */
+.badge {
+    font-size: 0.9em;
+    padding: 0.5em 0.75em;
+}
+
+/* Estilos para los botones */
+.btn {
+    border-radius: 5px;
+    padding: 0.375rem 0.75rem;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #146c43;
+}
+
+/* Estilos para el gráfico */
+.chart-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+
+/* Estilos para los mensajes de alerta */
+.alert {
+    border-radius: 5px;
+}
+
+/* Estilos para el pie de página */
+footer {
+    background-color: #f1f1f1;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Estilos para el menú contextual */
+.context-menu {
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding: 5px 0;
+    border-radius: 4px;
+    display: none;
+}
+
+.context-menu-item {
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.context-menu-item:hover {
+    background-color: #f5f5f5;
+}
+
+/* Estilos para el análisis */
+.metric-card {
+    border-left: 4px solid #0d6efd;
+    transition: transform 0.2s;
+}
+
+.metric-card:hover {
+    transform: translateY(-3px);
+}
+
+.metric-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+.metric-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
