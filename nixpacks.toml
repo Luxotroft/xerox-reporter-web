@@ -1,7 +1,8 @@
 [build]
 language = "python"
-includes = ["backend/"]
+includes = ["backend/"]  # Fuerza a usar solo esta carpeta
 
 [phases]
 setup = "python -m pip install --upgrade pip"
-install = "pip install -r backend/requirements.txt"
+install = "cd backend && pip install -r requirements.txt && pip install gunicorn"
+start = "cd backend && gunicorn app:app --bind 0.0.0.0:$PORT --workers 1"
