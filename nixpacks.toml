@@ -1,4 +1,6 @@
 [build]
 language = "python"
-install_command = "pip install -r backend/requirements.txt && pip install gunicorn"
-start_command = "gunicorn backend.app:app --bind 0.0.0.0:$PORT"
+includes = ["backend/"]  # Fuerza a usar solo esta carpeta
+
+[phases]
+install = "pip install -r backend/requirements.txt && pip install gunicorn"
