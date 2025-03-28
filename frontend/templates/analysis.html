@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">Análisis de Desempeño</h4>
+    </div>
+    <div class="card-body">
+        <form id="analysisForm">
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <label for="analysisType" class="form-label">Tipo de Análisis</label>
+                    <select class="form-select" id="analysisType" name="analysisType" required>
+                        <option value="" selected disabled>Seleccione...</option>
+                        <option value="agente">Por Agente</option>
+                        <option value="mesa">Por Mesa</option>
+                        <option value="todos">Todos</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="year" class="form-label">Año</label>
+                    <select class="form-select" id="year" name="year" required>
+                        {% for y in range(2023, 2028) %}
+                            <option value="{{ y }}" {% if y == current_year %}selected{% endif %}>{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="month" class="form-label">Mes</label>
+                    <select class="form-select" id="month" name="month" required>
+                        <option value="Todos" selected>Todos</option>
+                        <option value="Enero">Enero</option>
+                        <option value="Febrero">Febrero</option>
+                        <option value="Marzo">Marzo</option>
+                        <option value="Abril">Abril</option>
+                        <option value="Mayo">Mayo</option>
+                        <option value="Junio">Junio</option>
+                        <option value="Julio">Julio</option>
+                        <option value="Agosto">Agosto</option>
+                        <option value="Septiembre">Septiembre</option>
+                        <option value="Octubre">Octubre</option>
+                        <option value="Noviembre">Noviembre</option>
+                        <option value="Diciembre">Diciembre</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-4" id="agentSelection" style="display: none;">
+                <div class="col-md-8">
+                    <label for="agent" class="form-label">Seleccionar Agente</label>
+                    <select class="form-select" id="agent" name="agent">
+                        <option value="" selected disabled>Seleccione un agente...</option>
+                        {% for agente in agentes %}
+                            <option value="{{ agente }}">{{ agente }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-4" id="mesaSelection" style="display: none;">
+                <div class="col-md-8">
+                    <label for="mesa" class="form-label">Seleccionar Mesa</label>
+                    <select class="form-select" id="mesa" name="mesa">
+                        <option value="" selected disabled>Seleccione una mesa...</option>
+                        <option value="México Regional">México Regional</option>
+                        <option value="México GCC">México GCC</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-graph-up"></i> Generar Análisis
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const analysisForm = document.getElementById('analysisForm');
+    const analysisType = document.getElementById('analysisType');
+    const agentSelection = document.getElementById('agentSelection');
+    const mesaSelection = document.getElementById('mesaSelection');
+    const agentField = document.getElementById('agent');
+    const mesaField = document.getElementById('mesa');
+
+    // Mostrar/ocultar campos según el tipo de análisis
+    analysisType.addEventListener('change', function() {
+        agentSelection.style.display = 'none';
+        mesaSelection.style.display = 'none';
+        agentField.required = false;
+        mesaField.required = false;
+
+        if (this.value === 'agente') {
+            agentSelection.style.display = 'block';
+            agentField.required = true;
+        } else if (this.value === 'mesa') {
+            mesaSelection.style.display = 'block';
+            mesaField.required = true;
+        }
+    });
+
+    // Envío del formulario
+    analysisForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(analysisForm);
+        const data = Object.fromEntries(formData.entries());
+        
+        fetch('/perform_analysis', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                // Redirigir a la página de resultados con los datos
+                window.location.href = "{{ url_for('results') }}?data=" + encodeURIComponent(JSON.stringify(result));
+            } else {
+                alert('Error en el análisis: ' + (result.message || 'Error desconocido'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al realizar el análisis');
+        });
+    });
+});
+</script>
+{% endblock %}
