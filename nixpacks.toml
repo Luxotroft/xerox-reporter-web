@@ -1,4 +1,4 @@
 [build]
 language = "python"
-install_command = "pip install -r backend/requirements.txt"
-start_command = "gunicorn backend.app:app --bind 0.0.0.0:$PORT"
+install_command = "pip install -r backend/requirements.txt && pip install gunicorn"
+start_command = "gunicorn backend.app:app --bind 0.0.0.0:$PORT --workers 1"
