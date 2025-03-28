@@ -1,0 +1,13 @@
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "config": {
+      "phases": {
+        "setup": "pip install --upgrade pip",
+        "install": "pip install -r requirements.txt",
+        "build": "python -m flask db upgrade",
+        "start": "gunicorn app:app"
+      }
+    }
+  }
+}
